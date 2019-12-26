@@ -1,3 +1,7 @@
+master_mind/__pycache__
 master_mind/utils/__pycache__
 master_mind/code_iter/__pycache__
 master_mind/policy/__pycache__
+
+analysis/storage
+analysis/.ipynb_checkpoints
