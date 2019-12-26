@@ -76,3 +76,6 @@ B ... the set of colors are **not** included in the guess history
     in the case of 3 colors and 3 pins, it is only necessary to search for (1, 1, 1), (1, 1, 2), (1, 2, 3)
   + In this way, combinations of B colors that cannot be distinguished can be reduced
 
+## samplingCodeIterator
+
+Sampling code from reduced code iterator

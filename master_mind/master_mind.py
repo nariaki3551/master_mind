@@ -12,6 +12,7 @@ from policy import (
 from code_iter import (
     AllCodeIterator,
     ReducedCodeIterator,
+    SamplingCodeIterator,
 )
 
 policies = {
@@ -23,6 +24,7 @@ policies = {
 iters = {
     'all'     : AllCodeIterator,
     'reduce'  : ReducedCodeIterator,
+    'sampling': SamplingCodeIterator,
 }
 
 
