@@ -10,7 +10,8 @@ from policy import (
     get_max_entropy_code,
 )
 from code_iter import (
-    AllCodeIterator
+    AllCodeIterator,
+    ReducedCodeIterator,
 )
 
 policies = {
@@ -21,6 +22,7 @@ policies = {
 
 iters = {
     'all'     : AllCodeIterator,
+    'reduce'  : ReducedCodeIterator,
 }
 
 
@@ -146,6 +148,12 @@ def argparser():
         help='Guess code policy (Default is minmax)'
     )
     parser.add_argument(
+        '--iter',
+        choices=list(iters),
+        default='reduce',
+        help='Code iter type'
+    )
+    parser.add_argument(
         '--mode',
         choices=['mktree', 'guess'],
         default='mktree',
@@ -174,7 +182,7 @@ if __name__ == '__main__':
     assert_args(args)
 
     # generate config
-    code_iter = iters['all']()
+    code_iter = iters[args.iter]()
     config = Config(
         args.C, args.P, args.policy,
         code_iter, args.mode, not args.no_duplicate

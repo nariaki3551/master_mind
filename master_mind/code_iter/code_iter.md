@@ -60,3 +60,19 @@ iterator of all code.
 2. Rearrange patterns while removing duplicate patterns
 
 <br>
+
+## ReducedCodeIterator
+
+Iterator of code reduced by guess history.
+
+**idea**
+
+A ... the set of colors are included in the guess history
+
+B ... the set of colors are **not** included in the guess history
+
++ The color of B can be considered indistinguishable in that turn
+  + For example, at the first turn, player cannot distinguish all colors
+    in the case of 3 colors and 3 pins, it is only necessary to search for (1, 1, 1), (1, 1, 2), (1, 2, 3)
+  + In this way, combinations of B colors that cannot be distinguished can be reduced
+

@@ -1,18 +1,20 @@
 # Master Mind
 
-[Mastermind](https://en.wikipedia.org/wiki/Mastermind_(board_game)) is a kind of classical board games. This python project searches the optimal strategy for the Mastermind.
+[Mastermind](https://en.wikipedia.org/wiki/Mastermind_(board_game)) is a kind of classical board games.<br>
+This python project searches the optimal strategy for the Mastermind.
 
 <br>
 
-version: 0.1 (2019-12-27)
+version: 0.2 (2019-12-27)
 
 <br>
 
 ## Development environment
 
-python: 3.7.5
+python: 3.7.5<br>
 
-numpy: 1.17.4
+numpy: 1.17.4<br>
+sympy: 1.5<br>
 matplotlib: 3.1.2
 
 <br>
@@ -29,6 +31,7 @@ pip install -r requairements.txt
 
 ```
 python master_mind.py C P [--policy policy_name]
+                          [--iter code_iter_name]
                           [--mode mode]
                           [--no_duplicate]
 ```
@@ -42,6 +45,9 @@ C and P are the number of colors and pins, respectively.
 + `--policy` (Default is minmax)
   + you can see all available policies by  `python master_mind.py C P --policy`
   + document about each policy is in `policy/policy.md`
++ `--iter` (Default is all)
+  + you can see all aveilable code iterators by  `python master_mind.py C P --iter`
+  + document about each code iterator is in `code_iter/code_iter.md`
 + `--no_duplicate`
 
   + if you use this option, the secret and guess code has no color duplicate.
@@ -65,7 +71,7 @@ Making the search tree according to the policy
 
 **save search tree**
 
-`python master_mind.py C P [--policy policy_name] > savename`
+`python master_mind.py C P [--policy policy_name] [--iter code_iter_name] > savename`
 
 <br>
 
