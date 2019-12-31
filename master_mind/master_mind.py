@@ -4,28 +4,8 @@ from numpy import mean
 from time import time
 
 from utils.common import time_counter
-from policy import (
-    get_random_code,
-    get_minmax_code,
-    get_max_entropy_code,
-)
-from code_iter import (
-    AllCodeIterator,
-    ReducedCodeIterator,
-    SamplingCodeIterator,
-)
-
-policies = {
-    'random'     : get_random_code,
-    'minmax'     : get_minmax_code,
-    'max_entropy': get_max_entropy_code,
-}
-
-iters = {
-    'all'     : AllCodeIterator,
-    'reduce'  : ReducedCodeIterator,
-    'sampling': SamplingCodeIterator,
-}
+from policy import policies
+from code_iter import iters
 
 
 class Config:
@@ -136,7 +116,11 @@ def disp_stat(log, config):
 
 
 def argparser():
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        prog='{}'.format(__file__),
+        usage='Solve the master mind',
+        add_help=True,
+    )
     parser.add_argument(
         'C', type=int, help='Number of colors'
     )
