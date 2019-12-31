@@ -1,6 +1,5 @@
 from utils.common import calc_dist
 from math import log2
-from multiprocessing import Pool
 
 def calc_entropy(code, feasible_codes, config):
     entropy = 0
@@ -8,7 +7,8 @@ def calc_entropy(code, feasible_codes, config):
     for key in dist:
         p = len(dist[key]) / len(feasible_codes)
         entropy -= p*log2(p)
-    return entropy, code
+    score = (entropy, code in feasible_codes)
+    return score
 
 
 def get_max_entropy_code(feasible_codes, guess_iter, config):
@@ -18,6 +18,6 @@ def get_max_entropy_code(feasible_codes, guess_iter, config):
     """
     max_entropy_code = max(
         guess_iter,
-        key=lambda code: calc_entropy(code)[0]
+        key=lambda code: calc_entropy(code, feasible_codes, config)
     )
     return max_entropy_code, calc_dist(max_entropy_code, feasible_codes, config)
