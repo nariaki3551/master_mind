@@ -32,10 +32,16 @@ def count_hitblow(code, other_code, config):
 
 @lru_cache(maxsize=None)
 def _count_hitblow(code, other_code, config):
-    a = Counter(code)
-    b = Counter(other_code)
-    hit = sum(1 for c, oc in zip(code, other_code) if c == oc)
-    blow = sum(min(a[color], b[color]) for color in config.COLORS) - hit
+    a = [0]*len(config.COLORS)
+    b = [0]*len(config.COLORS)
+    hit = 0
+    for c, oc in zip(code, other_code):
+        if c == oc:
+            hit += 1
+        else:
+            a[c-1]  += 1
+            b[oc-1] += 1
+    blow = sum(min(a[color-1], b[color-1]) for color in config.COLORS)
     return hit, blow
 
 
