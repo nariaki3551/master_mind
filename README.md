@@ -5,17 +5,13 @@ This python project searches the optimal strategy for the Mastermind.
 
 <br>
 
-version: 0.2 (2019-12-27)
+version: 0.3 (2020-1-11)
 
 <br>
 
 ## Development environment
 
-python: 3.7.5<br>
-
-numpy: 1.17.4<br>
-sympy: 1.5<br>
-matplotlib: 3.1.2
+python: 3.7.5, numpy: 1.17.4, sympy: 1.5, matplotlib: 3.1.2
 
 <br>
 
