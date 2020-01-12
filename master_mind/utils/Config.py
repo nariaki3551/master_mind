@@ -2,7 +2,7 @@ from policy import policies
 
 class Config:
     def __init__(self, nc, np, policy_name,
-                 code_iter, mode, duplicate):
+                 code_iter, mode, duplicate, logger):
         # setting number of color and pins
         self.NUM_COLOR = nc
         self.NUM_PIN = np
@@ -14,8 +14,17 @@ class Config:
         # setting other parameter
         self.mode = mode
         self.duplicate = duplicate
-        # settin code-iter
+        # setting logger
+        self.logger = logger
+        # setting code-iter
         self.code_iter = code_iter.set_code_iter(self)
+
+    def get_code_iter(self, code, guess_hist=list()):
+        return self.code_iter(
+            code,
+            guess_hist=guess_hist,
+            config=self
+        )
 
     def __hash__(self):
         return 1  # for lru_chache
