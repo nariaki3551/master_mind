@@ -95,7 +95,7 @@ def step(codes, guess_hist, log, config):
 
     elif config.mode == 'guess':
         print('Candidates:', len(codes))
-        hit, blow = map(int, input('input: hit blow\n').split())
+        hit, blow = input_hitblow(config)
         if len(dist[hit, blow]) == 1:  # find the secret code
             print('secret is {}'.format(dist[hit, blow][0]))
             exit()
