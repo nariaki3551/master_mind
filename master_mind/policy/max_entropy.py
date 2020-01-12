@@ -1,6 +1,7 @@
-from utils.common import calc_dist
 from math import log2
 from multiprocessing import Pool
+from utils import calc_dist
+
 
 def calc_entropy(code, feasible_codes, config):
     entropy = 0

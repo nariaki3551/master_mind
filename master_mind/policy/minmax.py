@@ -1,5 +1,6 @@
-from utils.common import calc_dist
 from multiprocessing import Pool
+from utils import calc_dist
+
 
 def max_feasibles(code, feasible_codes, config):
     score = (

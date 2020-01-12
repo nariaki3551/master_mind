@@ -72,3 +72,10 @@ def time_counter(func):
         running_time += time()
         print('\nRunning Time {:.2f}s'.format(running_time))
     return wrapper
+
+
+def green_str(s):
+    return '\033[32m' + s + '\033[0m'
+
+def blue_str(s):
+    return '\033[36m' + s + '\033[0m'

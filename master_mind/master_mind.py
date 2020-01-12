@@ -3,46 +3,12 @@ from collections import Counter
 from numpy import mean
 from time import time
 
-from utils.common import time_counter, input_hitblow
+from utils import time_counter, input_hitblow, Config, Log
 from policy import policies
 from code_iter import code_iters
 
-
-class Config:
-    def __init__(self, nc, np, policy_name,
-                 code_iter, mode, duplicate):
-        # setting number of color and pins
-        self.NUM_COLOR = nc
-        self.NUM_PIN = np
-        self.COLORS = set(i for i in range(1, nc+1))
-        self.PINS = set(i for i in range(np))
-        # setting policy
-        self.policy_name = policy_name
-        self.policy = policies[policy_name]
-        # setting other parameter
-        self.mode = mode
-        self.duplicate = duplicate
-        # settin code-iter
-        self.code_iter = code_iter.set_code_iter(self)
-
-    def __hash__(self):
-        return 1  # for lru_chache
-
-    def __str__(self):
-        s  = 'NUM_COLOR : {}\n'.format(self.NUM_COLOR)
-        s += 'NUM_PIN   : {}\n'.format(self.NUM_PIN)
-        s += 'POLICY    : {}\n'.format(self.policy_name)
-        s += 'CODE_ITER : {}\n'.format(self.code_iter.iter_name)
-        s += 'MODE      : {}\n'.format(self.mode)
-        s += 'DUPLICATE : {}\n'.format(['not ', ''][self.duplicate]+'allowed')
-        return s
-
-
-class Log:
-    def __init__(self):
-        self.running_time = None
-        self.turns = list()
-
+import logging
+from logging import getLogger, StreamHandler
 
 @time_counter
 def master_mind(log, config):
@@ -54,7 +20,7 @@ def master_mind(log, config):
     log.running_time = - time()
 
     # main
-    all_codes = list(config.code_iter('all'))
+    all_codes = list(config.get_code_iter('all'))
     step(all_codes, [], log, config)
 
     log.running_time += time()
@@ -74,7 +40,7 @@ def step(codes, guess_hist, log, config):
     depth = len(guess_hist) + 1
 
     # guess
-    code_iter = config.code_iter(codes, guess_hist=guess_hist)
+    code_iter = config.get_code_iter(codes, guess_hist)
     guess, dist = config.policy(codes, code_iter, config)
     guess_hist.append(guess)
     print('Trial{}: {}'.format(depth, guess))
@@ -146,6 +112,12 @@ def argparser():
         action='store_true',
         help='Not allowed color dupulicate'
     )
+    parser.add_argument(
+        '--log_level',
+        choices=['debug', 'info', 'warning', 'error', 'critical'],
+        default='critical',
+        help='Select log level'
+    )
     return parser
 
 
@@ -156,6 +128,15 @@ def assert_args(args):
         "if you use --no_duplicate option, C must be greater than or eaual P"
 
 
+def get_log_level(log_level):
+    levels = {
+        'debug'   : logging.DEBUG,   'info'    : logging.INFO,
+        'warning' : logging.WARNING, 'error'   : logging.ERROR,
+        'critical': logging.CRITICAL
+    }
+    return levels[log_level]
+
+
 if __name__ == '__main__':
     parser = argparser()
     args = parser.parse_args()
@@ -163,15 +144,27 @@ if __name__ == '__main__':
     # check arguments
     assert_args(args)
 
+    # setting logger
+    logger = getLogger("master_mind")
+    stream_handler = StreamHandler()
+    level = get_log_level(args.log_level)
+    logger.setLevel(level)
+    stream_handler.setLevel(level)
+    logger.addHandler(stream_handler)
+
     # generate config
     code_iter = code_iters[args.iter]()
     config = Config(
         args.C, args.P, args.policy,
-        code_iter, args.mode, not args.no_duplicate
+        code_iter, args.mode, not args.no_duplicate,
+        logger
     )
     print('[ setting ]')
     print(config)
 
+    # generate log
     log = Log()  # for the statistical information
+
+    # main function
     master_mind(log, config)
 
