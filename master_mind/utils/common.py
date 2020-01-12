@@ -27,7 +27,13 @@ def count_hitblow(code, other_code, config):
     e.g. (1, 2, 3, 4) and (1, 2, 4, 5) -> (hit, blow) = (2, 1)
          (1, 2, 3, 4) and (1, 3, 3, 3) -> (hit, blow) = (2, 0)
     """
-    return _count_hitblow(*sorted([code, other_code]), config)
+    # return _count_hitblow(*sorted([code, other_code]), config)
+    if code < other_code:
+        return _count_hitblow(code, other_code, config)
+    elif other_code < code:
+        return _count_hitblow(other_code, code, config)
+    else:
+        return config.NUM_PIN, 0
 
 
 @lru_cache(maxsize=None)
