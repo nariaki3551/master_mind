@@ -1,5 +1,6 @@
 from random import choice
-from utils.common import calc_dist
+from utils import calc_dist
+
 
 def get_random_code(feasible_codes, guess_iter, config):
     random_code = choice(guess_iter)
