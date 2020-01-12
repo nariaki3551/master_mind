@@ -4,30 +4,8 @@ from numpy import mean
 from time import time
 
 from utils.common import time_counter
-from policy import (
-    get_random_code,
-    get_minmax_code,
-    get_max_entropy_code,
-    get_sampling_code,
-)
-from code_iter import (
-    AllCodeIterator,
-    ReducedCodeIterator,
-    SamplingCodeIterator,
-)
-
-policies = {
-    'random'     : get_random_code,
-    'minmax'     : get_minmax_code,
-    'max_entropy': get_max_entropy_code,
-    'sampling'   : get_sampling_code,
-}
-
-iters = {
-    'all'     : AllCodeIterator,
-    'reduce'  : ReducedCodeIterator,
-    'sampling': SamplingCodeIterator,
-}
+from policy import policies
+from code_iter import code_iters
 
 
 class Config:
@@ -117,7 +95,7 @@ def step(codes, guess_hist, log, config):
 
     elif config.mode == 'guess':
         print('Candidates:', len(codes))
-        hit, blow = map(int, input('input: hit blow\n').split())
+        hit, blow = input_hitblow(config)
         if len(dist[hit, blow]) == 1:  # find the secret code
             print('secret is {}'.format(dist[hit, blow][0]))
             exit()
@@ -153,7 +131,7 @@ def argparser():
     )
     parser.add_argument(
         '--iter',
-        choices=list(iters),
+        choices=list(code_iters),
         default='reduce',
         help='Code iter type'
     )
@@ -186,7 +164,7 @@ if __name__ == '__main__':
     assert_args(args)
 
     # generate config
-    code_iter = iters[args.iter]()
+    code_iter = code_iters[args.iter]()
     config = Config(
         args.C, args.P, args.policy,
         code_iter, args.mode, not args.no_duplicate

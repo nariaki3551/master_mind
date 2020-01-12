@@ -1,8 +1,8 @@
 from itertools import combinations_with_replacement, combinations, permutations
 from sympy.utilities.iterables import multiset_permutations  # 要素の重複を含む順列を求める用
-from code_iter.all_code_iter import get_code_generator_all
-from code_iter.stair_permutations import stair_permutations
-from code_iter.all_code_iter import get_code_generator_all
+from .all_code_iter import get_code_generator_all
+from .stair_permutations import stair_permutations
+from .all_code_iter import get_code_generator_all
 
 class ReducedCodeIterator:
     def __init__(self):

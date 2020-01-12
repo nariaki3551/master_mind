@@ -1,4 +1,4 @@
-from code_iter.reduced_code_iter import ReducedCodeIterator
+from .reduced_code_iter import ReducedCodeIterator
 from random import sample
 from math import floor
 
