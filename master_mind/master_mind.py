@@ -3,7 +3,7 @@ from collections import Counter
 from numpy import mean
 from time import time
 
-from utils.common import time_counter
+from utils.common import time_counter, input_hitblow
 from policy import policies
 from code_iter import code_iters
 
