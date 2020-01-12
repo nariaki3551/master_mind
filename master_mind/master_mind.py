@@ -8,6 +8,7 @@ from policy import (
     get_random_code,
     get_minmax_code,
     get_max_entropy_code,
+    get_sampling_code,
 )
 from code_iter import (
     AllCodeIterator,
@@ -19,6 +20,7 @@ policies = {
     'random'     : get_random_code,
     'minmax'     : get_minmax_code,
     'max_entropy': get_max_entropy_code,
+    'sampling'   : get_sampling_code,
 }
 
 iters = {
