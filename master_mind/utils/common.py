@@ -1,4 +1,4 @@
-from collections import Counter, defaultdict
+from collections import defaultdict
 from functools import lru_cache
 from time import time
 
@@ -43,6 +43,20 @@ def _count_hitblow(code, other_code, config):
             b[oc-1] += 1
     blow = sum(min(a[color-1], b[color-1]) for color in config.COLORS)
     return hit, blow
+
+
+def input_hitblow(config):
+    while True:
+        user_input = input('input: hit blow\n')
+        if len(user_input.split()) != 2:
+            continue
+        hit, blow = user_input.split()
+        if not hit.isdigit() or not blow.isdigit():
+            continue
+        hit, blow = map(int, [hit, blow])
+        if hit > config.NUM_PIN or blow > config.NUM_PIN:
+            continue
+        return hit, blow
 
 
 def time_counter(func):
