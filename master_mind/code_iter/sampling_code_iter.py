@@ -1,6 +1,6 @@
 from random import sample
 from time import time
-from math import floor
+from math import ceil
 from .reduced_code_iter import ReducedCodeIterator
 from utils import green_str
 
@@ -19,14 +19,19 @@ class SamplingCodeIterator(ReducedCodeIterator):
     def set_n_par_iteration(self, config):
         all_code_iter = super().__call__('all', config=config)
         code_iter = super().__call__(set(), guess_hist=[])
-        # self.n_par_iteration = round(len(all_code_iter) * len(code_iter)*4)
         self.n_par_iteration = round(len(all_code_iter) * len(code_iter))
+        if config.policy_name == 'sampling':
+            from setting import max_sampling
+            self.n_par_iteration = round(max_sampling * len(code_iter))
+        config.logger.info(
+            green_str('[code_iter] number of par iteration {self.n_par_iteration}')
+        )
 
     def __call__(self, codes, *args, **kwargs):
         config = kwargs['config']
         code_iter = super().__call__(codes, *args, **kwargs)
         self.n_iteration -= len(code_iter)
-        n_sample = floor(self.n_par_iteration/len(codes))
+        n_sample = ceil(self.n_par_iteration/len(codes))
         if codes == 'all' \
         or len(code_iter) < n_sample:
             info = f'[code_iter] sampling_iter {len(code_iter)} (full)'

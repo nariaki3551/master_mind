@@ -17,6 +17,10 @@ def get_max_entropy_code(feasible_codes, guess_iter, config):
     現在あり得る組み合わせの分割方法で,
     最大クラスのエントロピーがとなるような, 検査codeを見つけて, 出力する
     """
+    if len(guess_iter) == 1:
+        code = guess_iter[0]
+        return code, calc_dist(code, feasible_codes, config)
+
     max_entropy_code = max(
         guess_iter,
         key=lambda code: calc_entropy(code)[0]

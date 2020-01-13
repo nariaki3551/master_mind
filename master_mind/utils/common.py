@@ -62,6 +62,7 @@ def input_hitblow(config):
         hit, blow = map(int, [hit, blow])
         if hit > config.NUM_PIN or blow > config.NUM_PIN:
             continue
+        config.logger.debug(magenta_str(f'[util] user input is {hit} {blow}'))
         return hit, blow
 
 

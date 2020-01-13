@@ -15,6 +15,10 @@ def get_minmax_code(feasible_codes, guess_iter, config):
     現在あり得る組み合わせの分割方法で,
     最大クラスの大きさが最小となるような, 検査codeを見つけて, 出力する
     """
+    if len(guess_iter) == 1:
+        code = guess_iter[0]
+        return code, calc_dist(code, feasible_codes, config)
+
     minmax_code = min(
         guess_iter,
         key=lambda code: max_feasibles(code, feasible_codes, config)
