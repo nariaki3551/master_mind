@@ -1,9 +1,12 @@
-from itertools import combinations_with_replacement, combinations, permutations
+import os
+import pickle
 from time import time
+from itertools import combinations_with_replacement, combinations, permutations
 from sympy.utilities.iterables import multiset_permutations  # 要素の重複を含む順列を求める用
 from .all_code_iter import get_code_generator_all
 from .stair_permutations import stair_permutations
 from .all_code_iter import get_code_generator_all
+from setting import storage
 from utils import green_str, magenta_str
 
 class ReducedCodeIterator:
@@ -12,16 +15,32 @@ class ReducedCodeIterator:
         self.n_iteration = 0
 
     def set_code_iter(self, config):
-        config.logger.info(magenta_str('[code_iter] enumerate all codes'))
         self.config = config
         self.code_iters = dict()
         all_colors = tuple(sorted(list(config.COLORS)))
-        set_time = -time()
-        self.code_iters[all_colors] = list(get_code_generator_all(config))
-        set_time += time()
+        if os.path.exists(config.all_code_path):
+            config.logger.debug(
+                magenta_str(f'[code_iter] all_code is load from {config.all_code_path}')
+            )
+            enum_time = -time()
+            with open(config.all_code_path, 'rb') as pf:
+                all_code = pickle.load(pf)
+            enum_time += time()
+        else:
+            config.logger.debug(magenta_str(f'[code_iter] enumerate all_codes'))
+            enum_time = -time()
+            all_code = list(get_code_generator_all(config))
+            enum_time += time()
+            config.logger.debug(
+                magenta_str(f'[code_iter] all_code is saved in {config.all_code_path}')
+            )
+            os.makedirs(config.storage_dir, exist_ok=True)
+            with open(config.all_code_path, 'wb') as pf:
+                pickle.dump(all_code, file=pf)
         config.logger.info(
-            magenta_str(f'[code_iter] all codes {len(self.code_iters[all_colors])} time {set_time:.2f}s')
+            magenta_str(f'[code_iter] the number of all_code is {len(all_code)} ({enum_time:.2f}s)')
         )
+        self.code_iters[all_colors] = all_code
         return self
 
     def __call__(self, codes, *args, **kwargs):

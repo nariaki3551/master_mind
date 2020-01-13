@@ -1,6 +1,7 @@
-from policy import policies
 import logging
 from logging import getLogger, StreamHandler
+from policy import policies
+from setting import storage
 
 class Config:
     def __init__(self, nc, np, policy_name,
@@ -16,6 +17,8 @@ class Config:
         # setting other parameter
         self.mode = mode
         self.duplicate = duplicate
+        # setting all_code_path
+        self.set_all_code_path()
         # setting logger
         self.set_logger(log_level)
         # setting code-iter
@@ -27,6 +30,13 @@ class Config:
             guess_hist=guess_hist,
             config=self
         )
+
+
+    def set_all_code_path(self):
+        duplicate = 'duplicate' if self.duplicate else 'no_duplicate'
+        self.storage_dir = f'{storage}/{duplicate}/{self.NUM_COLOR}_{self.NUM_PIN}'
+        self.all_code_path = f'{self.storage_dir}/all_code.pickle'
+
 
     def set_logger(self, log_level):
         level = get_log_level(log_level)

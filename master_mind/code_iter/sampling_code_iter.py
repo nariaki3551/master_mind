@@ -24,7 +24,7 @@ class SamplingCodeIterator(ReducedCodeIterator):
             from setting import max_sampling
             self.n_par_iteration = round(max_sampling * len(code_iter))
         config.logger.info(
-            green_str('[code_iter] number of par iteration {self.n_par_iteration}')
+            green_str(f'[code_iter] number of par iteration {self.n_par_iteration}')
         )
 
     def __call__(self, codes, *args, **kwargs):
