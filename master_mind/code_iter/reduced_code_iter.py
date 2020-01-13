@@ -1,8 +1,10 @@
 from itertools import combinations_with_replacement, combinations, permutations
+from time import time
 from sympy.utilities.iterables import multiset_permutations  # 要素の重複を含む順列を求める用
 from .all_code_iter import get_code_generator_all
 from .stair_permutations import stair_permutations
 from .all_code_iter import get_code_generator_all
+from utils import green_str, magenta_str
 
 class ReducedCodeIterator:
     def __init__(self):
@@ -10,10 +12,16 @@ class ReducedCodeIterator:
         self.n_iteration = 0
 
     def set_code_iter(self, config):
+        config.logger.info(magenta_str('[code_iter] enumerate all codes'))
         self.config = config
         self.code_iters = dict()
         all_colors = tuple(sorted(list(config.COLORS)))
+        set_time = -time()
         self.code_iters[all_colors] = list(get_code_generator_all(config))
+        set_time += time()
+        config.logger.info(
+            magenta_str(f'[code_iter] all codes {len(self.code_iters[all_colors])} time {set_time:.2f}s')
+        )
         return self
 
     def __call__(self, codes, *args, **kwargs):

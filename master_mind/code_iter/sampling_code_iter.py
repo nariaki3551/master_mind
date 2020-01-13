@@ -1,4 +1,5 @@
 from random import sample
+from time import time
 from math import floor
 from .reduced_code_iter import ReducedCodeIterator
 from utils import green_str
@@ -28,8 +29,8 @@ class SamplingCodeIterator(ReducedCodeIterator):
         n_sample = floor(self.n_par_iteration/len(codes))
         if codes == 'all' \
         or len(code_iter) < n_sample:
-            # info = f'sampling_iter {len(code_iter)} (full)'
-            # config.logger.info(green_str(info))
+            info = f'[code_iter] sampling_iter {len(code_iter)} (full)'
+            config.logger.info(green_str(info))
             self.n_iteration += len(code_iter)
             return code_iter
         else:

@@ -79,3 +79,6 @@ def green_str(s):
 
 def blue_str(s):
     return '\033[36m' + s + '\033[0m'
+
+def magenta_str(s):
+    return '\033[35m' + s + '\033[0m'

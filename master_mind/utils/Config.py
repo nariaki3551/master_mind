@@ -1,8 +1,10 @@
 from policy import policies
+import logging
+from logging import getLogger, StreamHandler
 
 class Config:
     def __init__(self, nc, np, policy_name,
-                 code_iter, mode, duplicate, logger):
+                 code_iter, mode, duplicate, log_level):
         # setting number of color and pins
         self.NUM_COLOR = nc
         self.NUM_PIN = np
@@ -15,7 +17,7 @@ class Config:
         self.mode = mode
         self.duplicate = duplicate
         # setting logger
-        self.logger = logger
+        self.set_logger(log_level)
         # setting code-iter
         self.code_iter = code_iter.set_code_iter(self)
 
@@ -25,6 +27,14 @@ class Config:
             guess_hist=guess_hist,
             config=self
         )
+
+    def set_logger(self, log_level):
+        level = get_log_level(log_level)
+        self.logger = getLogger("master_mind")
+        self.logger.setLevel(level)
+        stream_handler = StreamHandler()
+        stream_handler.setLevel(level)
+        self.logger.addHandler(stream_handler)
 
     def __hash__(self):
         return 1  # for lru_chache
@@ -37,5 +47,14 @@ class Config:
         s += 'MODE      : {}\n'.format(self.mode)
         s += 'DUPLICATE : {}\n'.format(['not ', ''][self.duplicate]+'allowed')
         return s
+
+
+def get_log_level(log_level):
+    levels = {
+        'debug'   : logging.DEBUG,   'info'    : logging.INFO,
+        'warning' : logging.WARNING, 'error'   : logging.ERROR,
+        'critical': logging.CRITICAL
+    }
+    return levels[log_level]
 
 

@@ -5,6 +5,7 @@ from .common import (
     time_counter,
     green_str,
     blue_str,
+    magenta_str,
 )
 from .Config import Config
 from .Log import Log

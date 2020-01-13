@@ -7,8 +7,6 @@ from utils import time_counter, input_hitblow, Config, Log
 from policy import policies
 from code_iter import code_iters
 
-import logging
-from logging import getLogger, StreamHandler
 
 @time_counter
 def master_mind(log, config):
@@ -128,15 +126,6 @@ def assert_args(args):
         "if you use --no_duplicate option, C must be greater than or eaual P"
 
 
-def get_log_level(log_level):
-    levels = {
-        'debug'   : logging.DEBUG,   'info'    : logging.INFO,
-        'warning' : logging.WARNING, 'error'   : logging.ERROR,
-        'critical': logging.CRITICAL
-    }
-    return levels[log_level]
-
-
 if __name__ == '__main__':
     parser = argparser()
     args = parser.parse_args()
@@ -144,20 +133,12 @@ if __name__ == '__main__':
     # check arguments
     assert_args(args)
 
-    # setting logger
-    logger = getLogger("master_mind")
-    stream_handler = StreamHandler()
-    level = get_log_level(args.log_level)
-    logger.setLevel(level)
-    stream_handler.setLevel(level)
-    logger.addHandler(stream_handler)
-
     # generate config
     code_iter = code_iters[args.iter]()
     config = Config(
         args.C, args.P, args.policy,
         code_iter, args.mode, not args.no_duplicate,
-        logger
+        args.log_level
     )
     print('[ setting ]')
     print(config)

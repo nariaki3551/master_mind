@@ -5,7 +5,7 @@ This python project searches the optimal strategy for the Mastermind.
 
 <br>
 
-version: 0.3 (2020-1-11)
+version: 0.4 (2020-1-13)
 
 <br>
 
@@ -30,6 +30,7 @@ python master_mind.py C P [--policy policy_name]
                           [--iter code_iter_name]
                           [--mode mode]
                           [--no_duplicate]
+                          [--log_level]
 ```
 
 C and P are the number of colors and pins, respectively.
@@ -50,6 +51,8 @@ C and P are the number of colors and pins, respectively.
 + `--mode` (Default is mktree)
 
   + If you what to know a guess code the algorithm searches, select `--mode guess`
++ `--log_level` (Default is critical)
+  + you can adjust the logs displayed
 
 
 
