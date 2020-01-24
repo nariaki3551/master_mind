@@ -1,6 +1,4 @@
 from argparse import ArgumentParser
-from collections import Counter
-from numpy import mean
 from time import time
 
 from utils import time_counter, input_hitblow, Config, Log
@@ -22,7 +20,8 @@ def master_mind(log, config):
     step(all_codes, [], log, config)
 
     log.running_time += time()
-    disp_stat(log, config)
+    log.all_iteration = config.code_iter.n_iteration;
+    log.stat()
 
 
 def step(codes, guess_hist, log, config):
@@ -64,19 +63,6 @@ def step(codes, guess_hist, log, config):
             print('secret is {}'.format(dist[hit, blow][0]))
             exit()
         step(dist[hit, blow], guess_hist, log, config)
-
-
-def disp_stat(log, config):
-    """display the statistical infomation"""
-    stat  = ['[ result ]']
-    stat += ['Max Turn: {}'.format(max(log.turns))]
-    stat += ['Mean Turn: {0:.4f}'.format(mean(log.turns))]
-    stat += ['Turn Num']
-    for turn, num in sorted(Counter(log.turns).items()):
-        stat += ['{:<4d} {}'.format(turn, num)]
-    stat += ['All iteration: {}'.format(config.code_iter.n_iteration)]
-    stat += ['Ruuning time: {:.4f}'.format(log.running_time)]
-    print('\n'.join(stat))
 
 
 def argparser():
@@ -134,10 +120,9 @@ if __name__ == '__main__':
     assert_args(args)
 
     # generate config
-    code_iter = code_iters[args.iter]()
     config = Config(
         args.C, args.P, args.policy,
-        code_iter, args.mode, not args.no_duplicate,
+        args.iter, args.mode, not args.no_duplicate,
         args.log_level
     )
     print('[ setting ]')

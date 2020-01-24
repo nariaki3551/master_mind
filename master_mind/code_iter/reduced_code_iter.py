@@ -32,7 +32,7 @@ class ReducedCodeIterator:
             all_code = list(get_code_generator_all(config))
             enum_time += time()
             config.logger.debug(
-                magenta_str(f'[code_iter] all_code is saved in {config.all_code_path}')
+                magenta_str(f'[code_iter] save all_code in {config.all_code_path}')
             )
             os.makedirs(config.storage_dir, exist_ok=True)
             with open(config.all_code_path, 'wb') as pf:

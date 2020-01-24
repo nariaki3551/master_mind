@@ -5,15 +5,19 @@ from .minmax import get_minmax_code
 from setting import max_sampling
 
 def get_sampling_code(feasible_codes, guess_iter, config):
-    n_sample = min(len(feasible_codes), max_sampling)
-    if n_sample < len(feasible_codes):
+    if set(feasible_codes) & set(guess_iter):
+        sampling_codes = list(set(feasible_codes) & set(guess_iter))
+    else:
+        sampling_codes = guess_iter
+    n_sample = min(len(sampling_codes), max_sampling)
+    if n_sample < len(sampling_codes):
         info = f'[policy] check_codes {n_sample} <- {len(feasible_codes)}'
         config.logger.info(blue_str(info))
     else:
         info = f'[policy] check_codes {n_sample} (full)'
         config.logger.info(blue_str(info))
     search_time = -time()
-    sub_feasible_codes = sample(feasible_codes, n_sample)
+    sub_feasible_codes = sample(sampling_codes, n_sample)
     sub_minmax_code, _ = get_minmax_code(
         sub_feasible_codes,
         guess_iter,

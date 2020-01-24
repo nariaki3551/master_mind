@@ -29,7 +29,7 @@ class AllCodeIterator:
             all_code = sorted(list(get_code_generator_all(config)))
             enum_time += time()
             config.logger.debug(
-                magenta_str(f'[code_iter] all_code is saved in {config.all_code_path}')
+                magenta_str(f'[code_iter] save all_code in {config.all_code_path}')
             )
             # save all_code
             os.makedirs(config.storage_dir, exist_ok=True)

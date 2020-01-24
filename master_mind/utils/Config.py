@@ -1,11 +1,12 @@
 import logging
 from logging import getLogger, StreamHandler
 from policy import policies
+from code_iter import code_iters
 from setting import storage
 
 class Config:
     def __init__(self, nc, np, policy_name,
-                 code_iter, mode, duplicate, log_level):
+                 code_iter_name, mode, duplicate, log_level):
         # setting number of color and pins
         self.NUM_COLOR = nc
         self.NUM_PIN = np
@@ -22,7 +23,8 @@ class Config:
         # setting logger
         self.set_logger(log_level)
         # setting code-iter
-        self.code_iter = code_iter.set_code_iter(self)
+        self.code_iter = code_iters[code_iter_name]()
+        self.code_iter.set_code_iter(self)
 
     def get_code_iter(self, code, guess_hist=list()):
         return self.code_iter(
