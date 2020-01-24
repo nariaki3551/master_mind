@@ -62,25 +62,19 @@ class ReducedCodeIterator:
 
 def get_code_generator(guessed_colors, config):
     """ return a generator of all code """
-    return code_generator(guessed_colors, config)
-
-
-def code_generator(guessed_colors, config):
-    """ a generator of all code """
     A = guessed_colors
     B = sorted(list(config.COLORS - guessed_colors))
 
     if len(B) < 2:
         code_iter = get_code_generator_all(config)
-        # code_iter = config.code_iter('all')
     else:
         if config.duplicate:
             code_iter = _code_generator(guessed_colors, config)
         else:
             code_iter = _code_generator_noduplicate(guessed_colors, config)
 
-    for perm in code_iter:
-        yield perm
+    return code_iter
+
 
 def _code_generator(guessed_colors, config):
     A = guessed_colors
