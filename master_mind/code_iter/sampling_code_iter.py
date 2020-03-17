@@ -21,7 +21,7 @@ class SamplingCodeIterator(ReducedCodeIterator):
         code_iter = super().__call__(set(), guess_hist=[])
         self.n_par_iteration = round(len(all_code_iter) * len(code_iter))
         if config.policy_name == 'sampling':
-            from setting import max_sampling
+            from params import max_sampling
             self.n_par_iteration = round(max_sampling * len(code_iter))
         config.logger.info(
             green_str('[code_iter] number of par iteration {self.n_par_iteration}')
