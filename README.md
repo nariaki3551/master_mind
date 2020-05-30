@@ -5,9 +5,6 @@ This python project searches the optimal strategy for the Mastermind.
 
 <br>
 
-version: 0.4 (2020-1-13)
-
-<br>
 
 ## Development environment
 
