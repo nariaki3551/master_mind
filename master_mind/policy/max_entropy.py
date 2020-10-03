@@ -23,6 +23,6 @@ def get_max_entropy_code(feasible_codes, guess_iter, config):
 
     max_entropy_code = max(
         guess_iter,
-        key=lambda code: calc_entropy(code)[0]
+        key=lambda code: calc_entropy(code, feasible_codes, config)[0]
     )
     return max_entropy_code, calc_dist(max_entropy_code, feasible_codes, config)
