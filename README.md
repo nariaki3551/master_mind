@@ -44,7 +44,7 @@ C and P are the number of colors and pins, respectively.
   + document about each code iterator is in `code_iter/code_iter.md`
 + `--no_duplicate`
 
-  + if you use this option, the secret and guess code has no color duplicate.
+  + the secret and guess code has no color duplication if you use this option.
 + `--mode` (Default is mktree)
 
   + If you what to know a guess code the algorithm searches, select `--mode guess`
@@ -79,7 +79,7 @@ Interactively search the guess code according to the policy
 
 <br>
 
-If you play [this online game](https://www.webgamesonline.com/mastermind/) with default setting, you run `python master_mind.py 8 4 --no_duplicate --mode guess`.
+If you want to use this program for [this online game](https://www.webgamesonline.com/mastermind/) with default setting, you run `python master_mind.py 8 4 --no_duplicate --mode guess`.
 
 <br>
 
