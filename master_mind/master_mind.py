@@ -11,7 +11,8 @@ from code_iter import code_iters
 @time_counter
 def master_mind(log, config):
     if config.mode == 'mktree':
-        print('\n[ search tree ]')
+        if not config.benchmark:
+            print('\n[ search tree ]')
     elif config.mode == 'guess':
         print('\n[ guess mode ]')
 
@@ -41,27 +42,32 @@ def step(codes, guess_hist, log, config):
     code_iter = config.get_code_iter(codes, guess_hist)
     guess, dist = config.policy(codes, code_iter, config)
     guess_hist.append(guess)
-    print('Trial{}: {}'.format(depth, guess))
+    if not config.benchmark:
+        print('Trial{}: {}'.format(depth, guess))
 
     # display the search information and do next step
     if config.mode == 'mktree':
         for hit, blow in sorted(dist, key=lambda k: len(dist[k])):
-            print('{}-> {} {} '.format(
-                '\t'*depth, (hit, blow), len(dist[hit, blow])), end=''
-            )
+            if not config.benchmark:
+                print('{}-> {} {} '.format(
+                    '\t'*depth, (hit, blow), len(dist[hit, blow])), end=''
+                )
             if len(dist[hit, blow]) == 1: # find the secret code
                 turn = depth if hit == config.NUM_PIN else depth+1
-                print('secret is {} {} Turns'.format(dist[hit, blow][0], turn))
+                if not config.benchmark:
+                    print('secret is {} {} Turns'.format(dist[hit, blow][0], turn))
                 log.turns.append(turn)
                 continue
             step(dist[hit, blow], guess_hist, log, config)
         guess_hist.pop()
 
     elif config.mode == 'guess':
-        print('Candidates:', len(codes))
+        if not config.benchmark:
+            print('Candidates:', len(codes))
         hit, blow = input_hitblow(config)
         if len(dist[hit, blow]) == 1:  # find the secret code
-            print('secret is {}'.format(dist[hit, blow][0]))
+            if not config.benchmark:
+                print('secret is {}'.format(dist[hit, blow][0]))
             exit()
         step(dist[hit, blow], guess_hist, log, config)
 
@@ -75,7 +81,7 @@ def disp_stat(log, config):
     for turn, num in sorted(Counter(log.turns).items()):
         stat += ['{:<4d} {}'.format(turn, num)]
     stat += ['All iteration: {}'.format(config.code_iter.n_iteration)]
-    stat += ['Ruuning time: {:.4f}'.format(log.running_time)]
+    stat += ['Running time: {:.4f}'.format(log.running_time)]
     print('\n'.join(stat))
 
 
@@ -116,6 +122,11 @@ def argparser():
         default='critical',
         help='Select log level'
     )
+    parser.add_argument(
+        '--benchmark',
+        action='store_true',
+        help='running bench mark mode (supress standard output)',
+    )
     return parser
 
 
@@ -138,6 +149,7 @@ if __name__ == '__main__':
     config = Config(
         args.C, args.P, args.policy,
         code_iter, args.mode, not args.no_duplicate,
+        args.benchmark,
         args.log_level
     )
     print('[ setting ]')
