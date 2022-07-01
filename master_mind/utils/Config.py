@@ -4,7 +4,7 @@ from logging import getLogger, StreamHandler
 
 class Config:
     def __init__(self, nc, np, policy_name,
-                 code_iter, mode, duplicate, log_level):
+                 code_iter, mode, duplicate, benchmark, log_level):
         # setting number of color and pins
         self.NUM_COLOR = nc
         self.NUM_PIN = np
@@ -16,6 +16,7 @@ class Config:
         # setting other parameter
         self.mode = mode
         self.duplicate = duplicate
+        self.benchmark = benchmark
         # setting logger
         self.set_logger(log_level)
         # setting code-iter

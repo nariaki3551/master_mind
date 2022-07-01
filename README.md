@@ -27,6 +27,7 @@ python master_mind.py C P [--policy policy_name]
                           [--iter code_iter_name]
                           [--mode mode]
                           [--no_duplicate]
+                          [--benchmark]
                           [--log_level]
 ```
 
@@ -43,14 +44,13 @@ C and P are the number of colors and pins, respectively.
   + you can see all aveilable code iterators by  `python master_mind.py C P --iter`
   + document about each code iterator is in `code_iter/code_iter.md`
 + `--no_duplicate`
-
   + the secret and guess code has no color duplication if you use this option.
 + `--mode` (Default is mktree)
-
   + If you what to know a guess code the algorithm searches, select `--mode guess`
 + `--log_level` (Default is critical)
   + you can adjust the logs displayed
-
++ `--benchmark`
+  + you can execute command for benchmarking policies, codings and so on.
 
 
 <br>
