@@ -38,19 +38,17 @@ C and P are the number of colors and pins, respectively.
 **options**
 
 + `--policy` (Default is minmax)
-  + you can see all available policies by  `python master_mind.py C P --policy`
-  + document about each policy is in `policy/policy.md`
+  + the details of policies are described in `policy/policy.md`
 + `--iter` (Default is all)
-  + you can see all aveilable code iterators by  `python master_mind.py C P --iter`
-  + document about each code iterator is in `code_iter/code_iter.md`
+  + the details of code iterators are described in `code_iter/code_iter.md`
 + `--no_duplicate`
   + the secret and guess code has no color duplication if you use this option.
 + `--mode` (Default is mktree)
-  + If you what to know a guess code the algorithm searches, select `--mode guess`
+  + select `--mode guess` when you want to know the actual guess code by policies.
 + `--log_level` (Default is critical)
-  + you can adjust the logs displayed
+  + the level of standard output
 + `--benchmark`
-  + you can execute command for benchmarking policies, codings and so on.
+  + execute program for benchmarking policies, codings and so on
 
 
 <br>
