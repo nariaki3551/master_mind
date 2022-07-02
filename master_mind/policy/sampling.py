@@ -1,8 +1,8 @@
 from random import sample
 from time import time
-from utils import calc_dist, blue_str
+from ..utils import calc_dist, blue_str
 from .minmax import get_minmax_code
-from params import max_sampling
+from ..params import max_sampling
 
 def get_sampling_code(feasible_codes, guess_iter, config):
     n_sample = min(len(feasible_codes), max_sampling)

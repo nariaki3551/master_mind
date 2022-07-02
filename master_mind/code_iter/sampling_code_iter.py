@@ -2,7 +2,7 @@ from random import sample
 from time import time
 from math import ceil
 from .reduced_code_iter import ReducedCodeIterator
-from utils import green_str
+from ..utils import green_str
 
 
 class SamplingCodeIterator(ReducedCodeIterator):

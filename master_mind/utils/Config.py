@@ -1,4 +1,4 @@
-from policy import policies
+from ..policy import policies
 import logging
 from logging import getLogger, StreamHandler
 

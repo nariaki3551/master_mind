@@ -2,6 +2,8 @@ from collections import defaultdict
 from functools import lru_cache
 from time import time
 
+from master_mind.cpp_utils import calc_dist as cpp_calc_dist
+
 
 def calc_dist(guess, feasible_codes, config):
     """
@@ -12,11 +14,9 @@ def calc_dist(guess, feasible_codes, config):
     distribution: dist
         key is (hit, blow), value is a list of feasible codes of (hit, blow)
     """
-    distribution = defaultdict(list)
-    for code in feasible_codes:
-        hit, blow = count_hitblow(guess, code, config)
-        distribution[hit, blow].append(code)
-    return distribution
+    dist = cpp_calc_dist(guess, feasible_codes, len(config.COLORS), config.NUM_PIN)
+    return dist
+
 
 
 def count_hitblow(code, other_code, config):
@@ -27,7 +27,6 @@ def count_hitblow(code, other_code, config):
     e.g. (1, 2, 3, 4) and (1, 2, 4, 5) -> (hit, blow) = (2, 1)
          (1, 2, 3, 4) and (1, 3, 3, 3) -> (hit, blow) = (2, 0)
     """
-    # return _count_hitblow(*sorted([code, other_code]), config)
     if code < other_code:
         return _count_hitblow(code, other_code, config)
     elif other_code < code:

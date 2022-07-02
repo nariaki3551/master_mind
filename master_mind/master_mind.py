@@ -3,9 +3,9 @@ from collections import Counter
 from numpy import mean
 from time import time
 
-from utils import time_counter, input_hitblow, Config, Log
-from policy import policies
-from code_iter import code_iters
+from .utils import time_counter, input_hitblow, Config, Log
+from .policy import policies
+from .code_iter import code_iters
 
 
 @time_counter
@@ -137,7 +137,7 @@ def assert_args(args):
         "if you use --no_duplicate option, C must be greater than or eaual P"
 
 
-if __name__ == '__main__':
+def cli_master_mind():
     parser = argparser()
     args = parser.parse_args()
 
@@ -161,3 +161,6 @@ if __name__ == '__main__':
     # main function
     master_mind(log, config)
 
+
+if __name__ == '__main__':
+    cli_master_mind()
